@@ -1,0 +1,124 @@
+package main
+
+templ home(data Data) {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
+			<style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .button-link {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .button-link:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        th {
+            background-color: #f8f8f8;
+            font-weight: bold;
+            color: #333;
+            text-transform: uppercase;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f8f8;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        @media screen and (max-width: 600px) {
+            table {
+                font-size: 14px;
+            }
+            th, td {
+                padding: 8px 10px;
+            }
+        }
+        .loadComponent {
+            padding: 16px;
+            color: blue;
+            margin-bottom: 24px;
+            background-color: darkgray;
+        }
+    </style>
+		</head>
+		<body style="display: flex; flex-direction: column; align-items: center;">
+			<div>
+				<p>This is the home and is a templ component</p>
+			</div>
+			<a href="http://127.0.0.1:3000/" class="button-link">Add New Contact</a>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Education</th>
+						<th>Graduation Year</th>
+						<th>Company</th>
+						<th>Position</th>
+						<th>Years of Experience</th>
+					</tr>
+				</thead>
+				<tbody>
+					for _, contact := range data.Contacts {
+						<tr id={ contact.Name }>
+							<td>{ contact.Name }</td>
+							<td>{ contact.Email }</td>
+							<td>{ contact.Education }</td>
+							<td>{ contact.GraduationYear }</td>
+							<td>{ contact.Company }</td>
+							<td>{ contact.Position }</td>
+							<td>{ contact.YearsOfExperience }</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+			<button hx-get="http://127.0.0.1:3000/frontend" hx-swap="innerHTML" hx-target="#react-container" class="loadComponent">Click me to load react component</button>
+			<div id="react-container"></div>
+			<script>
+				document.body.addEventListener('htmx:afterSwap', function(evt) {
+					if (evt.detail.target.id === 'react-container') {
+					// Load the CSS file
+					const link = document.createElement('link');
+					link.rel = 'stylesheet';
+					link.href = 'frontend/assets/index.css'; // Adjust the path to main CSS file
+					document.head.appendChild(link);
+
+					// Load the JavaScript file
+					const script = document.createElement('script');
+					script.src = 'frontend/assets/index.js'; // Adjust the path to main React JS file
+					document.body.appendChild(script);
+					}
+				});
+			</script>
+		</body>
+	</html>
+}
