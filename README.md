@@ -1,5 +1,4 @@
-# go-htmx-react-example# go-htmx-react-example
-
+# go-htmx-react-example
 This repository demonstrates a Go server using HTMX and React for the frontend.
 
 ## Running the Project
